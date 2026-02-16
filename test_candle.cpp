@@ -10,3 +10,10 @@ TEST(CandleTests, BodyContains) {
     EXPECT_FALSE(candle.body_contains(95)); // 95 вне тела
 }
 
+// для метода contains
+TEST(CandleTests, Contains) {
+    Candle candle(100, 95, 90, 98);
+    EXPECT_TRUE(candle.contains(92)); // внутри свечи
+    EXPECT_FALSE(candle.contains(85)); // вне свечи
+    EXPECT_TRUE(candle.contains(90)); // граничный случай
+}
