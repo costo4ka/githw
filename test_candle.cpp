@@ -17,3 +17,15 @@ TEST(CandleTests, Contains) {
     EXPECT_FALSE(candle.contains(85)); // вне свечи
     EXPECT_TRUE(candle.contains(90)); // граничный случай
 }
+
+// для метода full_size
+TEST(CandleTests, FullSize) {
+    Candle candle1(100, 90, 95, 98);
+    EXPECT_DOUBLE_EQ(candle1.full_size(), 5.0); // |90 - 95| = 5
+
+    Candle candle2(100, 100, 100, 100);
+    EXPECT_DOUBLE_EQ(candle2.full_size(), 0.0); // |100 - 100| = 0
+
+    Candle candle3(100, 95, 90, 98);
+    EXPECT_DOUBLE_EQ(candle3.full_size(), 5.0); // |95 - 90| = 5 граничный случай
+}
