@@ -53,3 +53,15 @@ TEST(CandleTests, IsGreen) {
     Candle candle3(100, 100, 100, 100); // свеча без изменения цены
     EXPECT_FALSE(candle3.is_green()); // close == open
 }
+
+// для метода is_red
+TEST(CandleTests, IsRed) {
+    Candle candle1(100, 95, 90, 98);
+    EXPECT_TRUE(candle1.is_red()); // close < open
+
+    Candle candle2(90, 95, 85, 100);
+    EXPECT_FALSE(candle2.is_red()); // close > open
+
+    Candle candle3(100, 100, 100, 100); // свеча без изменения цены
+    EXPECT_FALSE(candle3.is_red()); // close == open
+}
