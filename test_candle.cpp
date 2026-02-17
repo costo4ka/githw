@@ -29,3 +29,15 @@ TEST(CandleTests, FullSize) {
     Candle candle3(100, 95, 90, 98);
     EXPECT_DOUBLE_EQ(candle3.full_size(), 5.0); // |95 - 90| = 5 граничный случай
 }
+
+// для метода body_size
+TEST(CandleTests, BodySize) {
+    Candle candle1(100, 95, 90, 98);
+    EXPECT_DOUBLE_EQ(candle1.body_size(), 2.0); // |100 - 98| = 2
+
+    Candle candle2(100, 100, 100, 100); // свеча без тела
+    EXPECT_DOUBLE_EQ(candle2.body_size(), 0.0); // |100 - 100| = 0
+
+    Candle candle3(90, 95, 85, 100);
+    EXPECT_DOUBLE_EQ(candle3.body_size(), 10.0); // |100 - 90| = 10
+}
