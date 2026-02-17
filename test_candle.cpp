@@ -41,3 +41,15 @@ TEST(CandleTests, BodySize) {
     Candle candle3(90, 95, 85, 100);
     EXPECT_DOUBLE_EQ(candle3.body_size(), 10.0); // |100 - 90| = 10
 }
+
+// для метода is_green
+TEST(CandleTests, IsGreen) {
+    Candle candle1(100, 95, 90, 98);
+    EXPECT_FALSE(candle1.is_green()); // close < open
+
+    Candle candle2(90, 95, 85, 100);
+    EXPECT_TRUE(candle2.is_green()); // close > open
+
+    Candle candle3(100, 100, 100, 100); // свеча без изменения цены
+    EXPECT_FALSE(candle3.is_green()); // close == open
+}
