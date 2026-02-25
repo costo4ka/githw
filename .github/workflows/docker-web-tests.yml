@@ -28,10 +28,10 @@ jobs:
 
       - name: Tag and push app image
         run: |
-          docker tag test-repo-app:latest ${{ secrets.DOCKERHUB_USERNAME }}/test-repo-app:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/test-repo-app:latest
+          docker tag githw-app:latest ${{ secrets.DOCKERHUB_USERNAME }}/githw-app:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/githw-app:latest
 
       - name: Tag and push web image
         run: |
-          docker tag test-repo-web:latest ${{ secrets.DOCKERHUB_USERNAME }}/test-repo-web:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/test-repo-web:latest
+          docker tag githw-web:latest ${{ secrets.DOCKERHUB_USERNAME }}/githw-web:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/githw-web:latest
