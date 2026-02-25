@@ -5,12 +5,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.app
+    image: githw-app:latest
     container_name: app
 
   web:
     build:
       context: .
       dockerfile: Dockerfile.web
+    image: githw-web:latest
     ports:
       - "80:80"
     depends_on:
