@@ -65,3 +65,37 @@ TEST(CandleTests, IsRed) {
     Candle candle3(100, 100, 100, 100); // свеча без изменения цены
     EXPECT_FALSE(candle3.is_red()); // close == open
 }
+
+// для метода upper_shadow_size
+TEST(CandleTests, UpperShadowSize) {
+    // зелёная свеча: open=90, high=110, low=85, close=105
+    // верхняя тень = high - max(open, close) = 110 - 105 = 5
+    Candle candle1(90, 110, 85, 105);
+    EXPECT_DOUBLE_EQ(candle1.upper_shadow_size(), 5.0);
+
+    // красная свеча: open=105, high=110, low=85, close=90
+    // верхняя тень = 110 - 105 = 5
+    Candle candle2(105, 110, 85, 90);
+    EXPECT_DOUBLE_EQ(candle2.upper_shadow_size(), 5.0);
+
+    // свеча без верхней тени
+    Candle candle3(90, 100, 85, 100);
+    EXPECT_DOUBLE_EQ(candle3.upper_shadow_size(), 0.0);
+}
+
+// для метода lower_shadow_size
+TEST(CandleTests, LowerShadowSize) {
+    // зелёная свеча: open=90, high=110, low=85, close=105
+    // нижняя тень = min(open, close) - low = 90 - 85 = 5
+    Candle candle1(90, 110, 85, 105);
+    EXPECT_DOUBLE_EQ(candle1.lower_shadow_size(), 5.0);
+
+    // красная свеча: open=105, high=110, low=85, close=90
+    // нижняя тень = 90 - 85 = 5
+    Candle candle2(105, 110, 85, 90);
+    EXPECT_DOUBLE_EQ(candle2.lower_shadow_size(), 5.0);
+
+    // свеча без нижней тени
+    Candle candle3(85, 110, 85, 100);
+    EXPECT_DOUBLE_EQ(candle3.lower_shadow_size(), 0.0);
+}

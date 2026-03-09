@@ -2,6 +2,7 @@
 
 #include <string>
 #include <stdexcept>
+#include <algorithm>
 
 Candle::Candle(Price _open, Price _high, Price _low, Price _close)
 	: open(_open)
@@ -50,4 +51,14 @@ bool Candle::is_green() const noexcept
 bool Candle::is_red() const noexcept
 {
 	return close < open;
+}
+
+double Candle::upper_shadow_size() const noexcept
+{
+	return high - std::max(open, close);
+}
+
+double Candle::lower_shadow_size() const noexcept
+{
+	return std::min(open, close) - low;
 }

@@ -35,4 +35,10 @@ public:
 	bool is_green() const noexcept;
 	bool is_red() const noexcept;
 
+	//возвращает размер верхней тени свечи
+	double upper_shadow_size() const noexcept;
+
+	//возвращает размер нижней тени свечи
+	double lower_shadow_size() const noexcept;
+
 };

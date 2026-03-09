@@ -2,7 +2,7 @@ name: Docker Build, Test and Publish
 
 on:
   push:
-    branches: [ "master", "feature/docker-web-hub" ]
+    branches: [ "master", "feature/docker-web-hub", "feature/k8s-helm" ]
   pull_request:
     branches: [ "master" ]
 
@@ -38,3 +38,41 @@ jobs:
         run: |
           docker tag githw-web:latest ${{ secrets.DOCKERHUB_USERNAME }}/githw-web:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/githw-web:latest
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Package Helm chart
+        run: helm package helm/test-repo-chart
+
+      - name: Upload Helm chart as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: helm-chart
+          path: test-repo-chart-*.tgz
+
+  deploy:
+    needs: build-test-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Configure kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install test-release ./helm/test-repo-chart \
+            --set app.image=${{ secrets.DOCKERHUB_USERNAME }}/githw-app:latest \
+            --set web.image=${{ secrets.DOCKERHUB_USERNAME }}/githw-web:latest

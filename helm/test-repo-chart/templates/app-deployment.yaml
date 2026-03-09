@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+  labels:
+    {{- include "test-repo-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: test-repo-app
+  template:
+    metadata:
+      labels:
+        app: test-repo-app
+    spec:
+      containers:
+        - name: app
+          image: {{ .Values.app.image }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              ctest --test-dir build --output-on-failure
+              echo "--- Tests completed ---"
+              sleep infinity

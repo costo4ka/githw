@@ -1,0 +1,11 @@
+app:
+  image: atebaikina/githw-app:latest
+  replicas: 1
+
+web:
+  image: atebaikina/githw-web:latest
+  replicas: 1
+
+service:
+  type: LoadBalancer
+  port: 80
