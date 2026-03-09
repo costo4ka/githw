@@ -25,3 +25,4 @@ CTestTestfile.cmake
 *.dll
 *.so
 *.pdb
+test-repo-chart-*.tgz
